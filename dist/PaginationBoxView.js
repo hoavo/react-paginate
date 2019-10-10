@@ -305,10 +305,10 @@ var PaginationBoxView = function (_Component) {
 
 
       var previousClasses = previousClassName + (selected === 0 ? ' ' + disabledClassName : '');
-      var nextClasses = nextClassName + (selected === pageCount - 1 ? ' ' + disabledClassName : '');
+      var nextClasses = nextClassName + (selected === pageCount - 1 && !isInfinity ? ' ' + disabledClassName : '');
 
       var previousAriaDisabled = selected === 0 ? 'true' : 'false';
-      var nextAriaDisabled = selected === pageCount - 1 || isInfinity ? 'true' : 'false';
+      var nextAriaDisabled = selected === pageCount - 1 && !isInfinity ? 'true' : 'false';
 
       return _react2.default.createElement(
         'ul',

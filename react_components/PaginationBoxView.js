@@ -324,11 +324,13 @@ export default class PaginationBoxView extends Component {
       previousClassName + (selected === 0 ? ` ${disabledClassName}` : '');
     const nextClasses =
       nextClassName +
-      (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
+      (selected === pageCount - 1 && !isInfinity
+        ? ` ${disabledClassName}`
+        : '');
 
     const previousAriaDisabled = selected === 0 ? 'true' : 'false';
     const nextAriaDisabled =
-      selected === pageCount - 1 || isInfinity ? 'true' : 'false';
+      selected === pageCount - 1 && !isInfinity ? 'true' : 'false';
 
     return (
       <ul className={containerClassName}>
