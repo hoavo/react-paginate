@@ -32,6 +32,7 @@ export default class PaginationBoxView extends Component {
     breakLinkClassName: PropTypes.string,
     extraAriaContext: PropTypes.string,
     ariaLabelBuilder: PropTypes.func,
+    isInfinity: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -102,11 +103,13 @@ export default class PaginationBoxView extends Component {
 
   handleNextPage = evt => {
     const { selected } = this.state;
-    const { pageCount } = this.props;
+    const { pageCount, isInfinity } = this.props;
 
     evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
     if (selected < pageCount - 1) {
       this.handlePageSelected(selected + 1, evt);
+    } else if (isInfinity) {
+      this.handlePageSelected('isInfinity', evt);
     }
   };
 
@@ -312,6 +315,7 @@ export default class PaginationBoxView extends Component {
       previousLabel,
       nextLinkClassName,
       nextLabel,
+      isInfinity,
     } = this.props;
 
     const { selected } = this.state;
@@ -323,7 +327,8 @@ export default class PaginationBoxView extends Component {
       (selected === pageCount - 1 ? ` ${disabledClassName}` : '');
 
     const previousAriaDisabled = selected === 0 ? 'true' : 'false';
-    const nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+    const nextAriaDisabled =
+      selected === pageCount - 1 || isInfinity ? 'true' : 'false';
 
     return (
       <ul className={containerClassName}>

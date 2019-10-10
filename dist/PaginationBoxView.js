@@ -49,12 +49,16 @@ var PaginationBoxView = function (_Component) {
 
     _this.handleNextPage = function (evt) {
       var selected = _this.state.selected;
-      var pageCount = _this.props.pageCount;
+      var _this$props = _this.props,
+          pageCount = _this$props.pageCount,
+          isInfinity = _this$props.isInfinity;
 
 
       evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
       if (selected < pageCount - 1) {
         _this.handlePageSelected(selected + 1, evt);
+      } else if (isInfinity) {
+        _this.handlePageSelected('isInfinity', evt);
       }
     };
 
@@ -86,13 +90,13 @@ var PaginationBoxView = function (_Component) {
 
     _this.pagination = function () {
       var items = [];
-      var _this$props = _this.props,
-          pageRangeDisplayed = _this$props.pageRangeDisplayed,
-          pageCount = _this$props.pageCount,
-          marginPagesDisplayed = _this$props.marginPagesDisplayed,
-          breakLabel = _this$props.breakLabel,
-          breakClassName = _this$props.breakClassName,
-          breakLinkClassName = _this$props.breakLinkClassName;
+      var _this$props2 = _this.props,
+          pageRangeDisplayed = _this$props2.pageRangeDisplayed,
+          pageCount = _this$props2.pageCount,
+          marginPagesDisplayed = _this$props2.marginPagesDisplayed,
+          breakLabel = _this$props2.breakLabel,
+          breakClassName = _this$props2.breakClassName,
+          breakLinkClassName = _this$props2.breakLinkClassName;
       var selected = _this.state.selected;
 
 
@@ -295,7 +299,8 @@ var PaginationBoxView = function (_Component) {
           previousLinkClassName = _props5.previousLinkClassName,
           previousLabel = _props5.previousLabel,
           nextLinkClassName = _props5.nextLinkClassName,
-          nextLabel = _props5.nextLabel;
+          nextLabel = _props5.nextLabel,
+          isInfinity = _props5.isInfinity;
       var selected = this.state.selected;
 
 
@@ -303,7 +308,7 @@ var PaginationBoxView = function (_Component) {
       var nextClasses = nextClassName + (selected === pageCount - 1 ? ' ' + disabledClassName : '');
 
       var previousAriaDisabled = selected === 0 ? 'true' : 'false';
-      var nextAriaDisabled = selected === pageCount - 1 ? 'true' : 'false';
+      var nextAriaDisabled = selected === pageCount - 1 || isInfinity ? 'true' : 'false';
 
       return _react2.default.createElement(
         'ul',
@@ -375,7 +380,8 @@ PaginationBoxView.propTypes = {
   breakClassName: _propTypes2.default.string,
   breakLinkClassName: _propTypes2.default.string,
   extraAriaContext: _propTypes2.default.string,
-  ariaLabelBuilder: _propTypes2.default.func
+  ariaLabelBuilder: _propTypes2.default.func,
+  isInfinity: _propTypes2.default.bool
 };
 PaginationBoxView.defaultProps = {
   pageCount: 10,
